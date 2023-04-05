@@ -1,0 +1,212 @@
+<div class="flex h-screen justify-center">
+  <form class="p-4 rounded-lg border m-auto w-10/12 shadow-xl" #myForm="ngForm" (keyup)="formValidation()">
+    <h1 class="text-center text-xl">Sign Up</h1>
+    <div class="flex justify-between">
+      <div class="w-1/2">
+        <div class="my-5 w-5/6">
+          <input
+            type="text"
+            class="p-2 rounded w-full border"
+            id="name"
+            name="name"
+            placeholder="name"
+            [(ngModel)]="form.name"
+            #name="ngModel"
+            required
+            autocomplete="off"
+          />
+          <div
+            class="px-2 text-red-500"
+            *ngIf="name.invalid && (name.dirty || name.touched)"
+          >
+            name can't be empty
+          </div>
+        </div>
+        <div class="my-5 w-5/6">
+          <input
+            type="email"
+            class="p-2 rounded w-full border"
+            id="email"
+            name="email"
+            placeholder="email"
+            [(ngModel)]="form.email"
+            #email="ngModel"
+            required
+            autocomplete="off"
+          />
+          <div
+            class="px-2 text-red-500"
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+          >
+            email can't be empty
+          </div>
+        </div>
+        <div class="my-5 w-5/6">
+          <input
+            type="tel"
+            class="p-2 rounded w-full border"
+            id="phone"
+            name="phone"
+            placeholder="phone"
+            [(ngModel)]="form.phone"
+            #phone="ngModel"
+            required
+            autocomplete="off"
+            (blur)="checkPhoneNumber()"
+          />
+          <div class="px-2 text-red-500" *ngIf="!phoneNumberValidation">
+            phone number must be a 10 digit number
+          </div>
+        </div>
+        <div class="my-5 w-5/6 flex justify-between">
+          <label for="">Gender:</label>
+          <div>
+            <input type="radio" name="gender" value="m" />
+            <label for="">Male</label>
+          </div>
+          <div>
+            <input type="radio" name="gender" value="f" />
+            <label for="">Female</label>
+          </div>
+          <div>
+            <input type="radio" name="gender" value="o"/>
+            <label for="">Others</label>
+          </div>
+        </div>
+        <div class="w-5/6 flex justify-between">
+          <label for="">Eligibility:</label>
+          <div>
+            <label class="container"
+              >UG
+              <input type="checkbox"/>
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div>
+            <label class="container"
+              >PG
+              <input type="checkbox"/>
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div>
+            <label class="container"
+              >Diploma
+              <input type="checkbox"/>
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="w-1/2">
+        <div class="my-5 w-5/6">
+          <textarea
+            name="address"
+            id="address"
+            cols="20"
+            rows="6"
+            class="p-2 rounded w-full border"
+            placeholder="Address"
+            [(ngModel)]="form.address"
+            #address="ngModel"
+            required
+            autocomplete="off"
+          ></textarea>
+          <div
+            class="px-2 text-red-500"
+            *ngIf="address.invalid && (address.dirty || address.touched)"
+          >
+            address can't be empty
+          </div>
+        </div>
+        <div class="my-5 w-5/6">
+          <input
+            type="password"
+            class="p-2 rounded w-full border"
+            id="password"
+            name="password"
+            placeholder="password"
+            [(ngModel)]="form.password"
+            #password="ngModel"
+            required
+            minlength="8"
+            maxlength="12"
+          />
+          <div
+          class="px-2 text-red-500"
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+        >
+          password must be 8-12 charactors
+        </div>
+        </div>
+       
+        <div class="my-5 w-5/6">
+          <input
+            type="password"
+            class="p-2 rounded w-full border"
+            name="cpassword"
+            id="cpassword"
+            placeholder="confirm your password"
+            [(ngModel)]="form.cpassword"
+            #cpassword="ngModel"
+            required
+            (blur)="checkPassword()"
+          />
+          <div class="px-2 text-red-500" *ngIf="!passwordMatch">
+            Passwords are not matching
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="my-5 w-full flex justify-between">
+      <p class="w-1/6">Date of Birth:</p>
+      <div class="w-1/4">
+        <input
+          type="text"
+          placeholder="Day"
+          class="p-2 rounded w-full border"
+        />
+      </div>
+      <div class="w-1/4">
+        <select name="month" id="month" class="p-2 rounded w-full border">
+          <option value="" hidden>month</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+
+        </select>
+      </div>
+      <div class="w-1/4">
+        <input
+          type="text"
+          placeholder="Year"
+          class="p-2 rounded w-full border"
+          (blur)="formValidation()"
+        />
+      </div>
+    </div>
+    <div class="my-5 w-full">
+      <button
+        type="submit"
+        [disabled]="isDisabled"
+        class="p-2 rounded w-full bg-blue-500 hover:bg-blue-600 hover:cursor-pointer text-white disabled:bg-gray-400 disabled:text-gray-200"
+        id="submit"
+        (click)="signUp()"
+      >
+        Sign Up
+      </button>
+    </div>
+    <p class="text-center">
+      Already have an account? <a routerLink="" class="text-blue-500">Login</a>
+    </p>
+  </form>
+</div>
